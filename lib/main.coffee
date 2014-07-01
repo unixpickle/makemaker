@@ -1,4 +1,4 @@
-require 'coffee-script' # get better require() function
+require 'coffee-script/register' # get better require() function
 path = require 'path'
 fs = require 'fs'
 

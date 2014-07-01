@@ -2,7 +2,7 @@
 (function() {
   var Finder, Makefile, fs, func, makeOut, makefile, path, result;
 
-  require('coffee-script');
+  require('coffee-script/register');
 
   path = require('path');
 
