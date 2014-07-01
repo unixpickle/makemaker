@@ -9,7 +9,10 @@ if process.argv.length isnt 3
   process.exit 1
 
 func = require path.resolve process.argv[2]
-{makefile, output} = func Finder, Makefile
+
+makefile = func Finder, Makefile
 makefile.generateRules()
+
 result = makefile.encode()
-fs.writeFileSync output, result
+makeOut = path.join makefile.outRoot, 'Makefile'
+fs.writeFileSync makeOut, result
