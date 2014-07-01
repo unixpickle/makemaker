@@ -8,6 +8,9 @@
     "type": "GPL",
     "url": "http://www.gnu.org/licenses/gpl.html"
   }],
+  "dependencies": {
+    "coffee-script": "1.7.x"
+  },
   "engines": {
     "node": "0.10.x"
   },

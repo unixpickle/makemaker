@@ -1,3 +1,4 @@
+require 'coffee-script' # get better require() function
 path = require 'path'
 fs = require 'fs'
 
