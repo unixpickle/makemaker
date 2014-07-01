@@ -1,0 +1,17 @@
+{
+  "name": "makemaker",
+  "description": "generate Makefiles for your low-level projects",
+  "author": "Alex Nichol <unixpickle@gmail.com>",
+  "repository": "https://github.com/unixpickle/makemaker.git",
+  "version": "0.0.1",
+  "licenses": [{
+    "type": "GPL",
+    "url": "http://www.gnu.org/licenses/gpl.html"
+  }],
+  "engines": {
+    "node": "0.10.x"
+  },
+  "bin": {
+    "makemaker": "./bin/makemaker"
+  }
+}
