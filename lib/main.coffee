@@ -4,6 +4,7 @@ fs = require 'fs'
 
 Finder = require './finder'
 Makefile = require './makefile'
+Environment = require './environment'
 
 if process.argv.length isnt 3
   console.log 'Usage: makemaker <build.coffee>'

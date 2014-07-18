@@ -4,11 +4,18 @@ env = require './environment'
 class Makefile
   constructor: (@finder, @includes, @outRoot) ->
     @rules = {}
+    @addedFlags = c: '', cpp: '', asm: ''
+  
+  addFlags: (language, flags) ->
+    if @addedFlags[language].length is 0
+      @addedFlags[language] = flags
+    else
+      @addedFlags[language] += ' ' + flags
   
   generateRules: ->
-    @_generateWithVars @finder.cSources, env.c
-    @_generateWithVars @finder.cppSources, env.cpp
-    @_generateWithVars @finder.asmSources, env.asm, false
+    @_generateWithVars @finder.cSources, env.c, @addedFlags.c
+    @_generateWithVars @finder.cppSources, env.cpp, @addedFlags.cpp
+    @_generateWithVars @finder.asmSources, env.asm, @addedFlags.asm, false
   
   encode: ->
     result = 'all: ' + (x for own x of @rules).join(' ') + '\n\n'
@@ -31,13 +38,13 @@ class Makefile
       command = template.replace('%OUT', output).replace '%IN', input
       @_addRule output, input, command
   
-  _generateWithVars: (files, envInfo, extraFlags = true) ->
+  _generateWithVars: (files, envInfo, added, extraFlags = true) ->
     {compiler, flags} = envInfo
     if extraFlags
       includes = @_getIncludes()
-      command = "#{compiler} -c #{flags} #{includes} %IN -o %OUT"
+      command = "#{compiler} -c #{flags} #{added} #{includes} %IN -o %OUT"
     else
-      command = "#{compiler} #{flags ? ''} %IN -o %OUT"
+      command = "#{compiler} #{flags} #{added} %IN -o %OUT"
     @_generateWithTemplate files, command
   
   _simplifyName: (name) ->
