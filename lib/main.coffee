@@ -4,7 +4,7 @@ fs = require 'fs'
 
 Finder = require './finder'
 Makefile = require './makefile'
-Environment = require './environment'
+environment = require './environment'
 
 if process.argv.length isnt 3
   console.log 'Usage: makemaker <build.coffee>'
@@ -12,7 +12,7 @@ if process.argv.length isnt 3
 
 func = require path.resolve process.argv[2]
 
-makefile = func Finder, Makefile
+makefile = func Finder, Makefile, environment
 makefile.generateRules()
 
 result = makefile.encode()
