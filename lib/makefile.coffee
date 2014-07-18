@@ -1,6 +1,8 @@
 path = require 'path'
 env = require './environment'
 
+escapePath = (p) -> p.replace ' ', '\\ '
+
 class Makefile
   constructor: (@finder, @includes, @outRoot) ->
     @rules = {}
@@ -33,8 +35,8 @@ class Makefile
   _generateWithTemplate: (files, template) ->
     for file in files
       output = path.join @outRoot, @_simplifyName file
-      output = output.replace /\.[a-z]*$/, '.o'
-      input = path.join env.root, file
+      output = escapePath output.replace /\.[a-z]*$/, '.o'
+      input = escapePath path.join env.root, file
       command = template.replace('%OUT', output).replace '%IN', input
       @_addRule output, input, command
   
@@ -54,7 +56,7 @@ class Makefile
     val = env.includes
     for aPath in @includes
       val += ' ' if val.length
-      val += '-I' + path.join env.root, aPath
+      val += '-I' + escapePath path.join env.root, aPath
     return val
 
 module.exports = Makefile
