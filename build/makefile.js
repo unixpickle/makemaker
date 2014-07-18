@@ -13,12 +13,25 @@
       this.includes = includes;
       this.outRoot = outRoot;
       this.rules = {};
+      this.addedFlags = {
+        c: '',
+        cpp: '',
+        asm: ''
+      };
     }
 
+    Makefile.prototype.addFlags = function(language, flags) {
+      if (this.addedFlags[language].length === 0) {
+        return this.addedFlags[language] = flags;
+      } else {
+        return this.addedFlags[language] += ' ' + flags;
+      }
+    };
+
     Makefile.prototype.generateRules = function() {
-      this._generateWithVars(this.finder.cSources, env.c);
-      this._generateWithVars(this.finder.cppSources, env.cpp);
-      return this._generateWithVars(this.finder.asmSources, env.asm, false);
+      this._generateWithVars(this.finder.cSources, env.c, this.addedFlags.c);
+      this._generateWithVars(this.finder.cppSources, env.cpp, this.addedFlags.cpp);
+      return this._generateWithVars(this.finder.asmSources, env.asm, this.addedFlags.asm, false);
     };
 
     Makefile.prototype.encode = function() {
@@ -67,7 +80,7 @@
       return _results;
     };
 
-    Makefile.prototype._generateWithVars = function(files, envInfo, extraFlags) {
+    Makefile.prototype._generateWithVars = function(files, envInfo, added, extraFlags) {
       var command, compiler, flags, includes;
       if (extraFlags == null) {
         extraFlags = true;
@@ -75,9 +88,9 @@
       compiler = envInfo.compiler, flags = envInfo.flags;
       if (extraFlags) {
         includes = this._getIncludes();
-        command = "" + compiler + " -c " + flags + " " + includes + " %IN -o %OUT";
+        command = "" + compiler + " -c " + flags + " " + added + " " + includes + " %IN -o %OUT";
       } else {
-        command = "" + compiler + " " + (flags != null ? flags : '') + " %IN -o %OUT";
+        command = "" + compiler + " " + flags + " " + added + " %IN -o %OUT";
       }
       return this._generateWithTemplate(files, command);
     };

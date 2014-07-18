@@ -4,7 +4,7 @@
 
   Environment = (function() {
     function Environment() {
-      var required, x, _i, _len, _ref;
+      var required, x, _i, _len, _ref, _ref1, _ref2, _ref3;
       required = ['PROJECT_ROOT', 'CXX', 'CC', 'CFLAGS', 'CXXFLAGS', 'ASM', 'ASMFLAGS'];
       for (_i = 0, _len = required.length; _i < _len; _i++) {
         x = required[_i];
@@ -16,15 +16,15 @@
       this.includes = (_ref = process.env['INCLUDES']) != null ? _ref : '';
       this.c = {
         compiler: process.env['CC'],
-        flags: process.env['CFLAGS']
+        flags: (_ref1 = process.env['CFLAGS']) != null ? _ref1 : ''
       };
       this.cpp = {
         compiler: process.env['CXX'],
-        flags: process.env['CXXFLAGS']
+        flags: (_ref2 = process.env['CXXFLAGS']) != null ? _ref2 : ''
       };
       this.asm = {
         compiler: process.env['ASM'],
-        flags: process.env['ASMFLAGS']
+        flags: (_ref3 = process.env['ASMFLAGS']) != null ? _ref3 : ''
       };
     }
 
