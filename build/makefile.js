@@ -83,7 +83,7 @@
     };
 
     Makefile.prototype._simplifyName = function(name) {
-      return name.replace(/\//g, '_');
+      return name.replace(/\//g, '_').replace('..', '__');
     };
 
     Makefile.prototype._getIncludes = function() {

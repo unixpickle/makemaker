@@ -48,7 +48,7 @@ class Makefile
     @_generateWithTemplate files, command
   
   _simplifyName: (name) ->
-    return name.replace /\//g, '_'
+    return name.replace(/\//g, '_').replace '..', '__'
   
   _getIncludes: ->
     val = env.includes
