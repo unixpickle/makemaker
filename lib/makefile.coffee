@@ -50,16 +50,14 @@ class Makefile
     @_generateWithTemplate files, command
   
   _simplifyName: (name) ->
-    return name.replace(/\//g, '_').replace '..', '__'
+    return name.replace(/\//g, '_').replace('..', '__').replace ' ', '___'
   
   _getIncludes: ->
     val = env.includes
     for aPath in @includes
+      relative = path.relative env.root, aPath
       val += ' ' if val.length
-      if aPath[0] isnt '/'
-        val += '-I' + escapePath path.join env.root, aPath
-      else
-        val += '-I' + escapePath aPath
+      val += '-I' + escapePath path.join env.root, relative
     return val
 
 module.exports = Makefile

@@ -100,23 +100,20 @@
     };
 
     Makefile.prototype._simplifyName = function(name) {
-      return name.replace(/\//g, '_').replace('..', '__');
+      return name.replace(/\//g, '_').replace('..', '__').replace(' ', '___');
     };
 
     Makefile.prototype._getIncludes = function() {
-      var aPath, val, _i, _len, _ref;
+      var aPath, relative, val, _i, _len, _ref;
       val = env.includes;
       _ref = this.includes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         aPath = _ref[_i];
+        relative = path.relative(env.root, aPath);
         if (val.length) {
           val += ' ';
         }
-        if (aPath[0] !== '/') {
-          val += '-I' + escapePath(path.join(env.root, aPath));
-        } else {
-          val += '-I' + escapePath(aPath);
-        }
+        val += '-I' + escapePath(path.join(env.root, relative));
       }
       return val;
     };

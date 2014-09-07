@@ -8,8 +8,9 @@ class Finder
     @cSources = []
     @asmSources = []
   
-  search: (dir) ->
-    return if not fs.existsSync dir
+  search: (_dir) ->
+    return if not fs.existsSync _dir
+    dir = path.relative env.root, _dir
     files = fs.readdirSync dir
     for file in files
       continue if file[0] is '.'

@@ -15,11 +15,12 @@
       this.asmSources = [];
     }
 
-    Finder.prototype.search = function(dir) {
-      var file, files, newPath, _i, _len, _results;
-      if (!fs.existsSync(dir)) {
+    Finder.prototype.search = function(_dir) {
+      var dir, file, files, newPath, _i, _len, _results;
+      if (!fs.existsSync(_dir)) {
         return;
       }
+      dir = path.relative(env.root, _dir);
       files = fs.readdirSync(dir);
       _results = [];
       for (_i = 0, _len = files.length; _i < _len; _i++) {
