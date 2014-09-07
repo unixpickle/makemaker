@@ -56,7 +56,10 @@ class Makefile
     val = env.includes
     for aPath in @includes
       val += ' ' if val.length
-      val += '-I' + escapePath path.join env.root, aPath
+      if aPath[0] isnt '/'
+        val += '-I' + escapePath path.join env.root, aPath
+      else
+        val += '-I' + escapePath aPath
     return val
 
 module.exports = Makefile
